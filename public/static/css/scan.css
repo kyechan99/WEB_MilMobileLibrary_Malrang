@@ -1,0 +1,159 @@
+
+.scan {
+	text-align: center;
+	align-items: center;
+}
+.stateBtn {
+	margin-top: 1rem;
+	width: 30%;
+}
+.description {
+	margin-top: 20px;
+}
+
+
+#scanner-container {
+	position: relative;
+	width: 480px;
+	height: 320px;
+	margin-left: auto;
+	margin-right: auto;
+}
+#scanner-container video {
+	position: absolute;
+	left: 0px !important;
+	top: 0px !important;
+	width: 480px;
+	height: 320px;
+}
+#scanner-container canvas {
+	position: absolute;
+	left: 0px !important;
+	top: 0px !important;
+}
+@media (max-width: 768px) {
+	#scanner-container {
+		margin-top: 150px;
+		position: relative;
+		width: auto;
+		height: auto;
+	}
+	#scanner-container video {
+		width: 100%;
+		height: auto;
+		margin: auto;
+		position: absolute;
+		top: 0; left: 0; bottom: 0; right: 0;
+	}
+	#scanner-container canvas {
+		width: 100%;
+		height: auto;
+		margin: auto;
+		position: absolute;
+		top: 0; left: 0; bottom: 0; right: 0;
+	}
+}
+@media (max-width: 576px) {
+	#scanner-container {
+		margin-top: 300px;
+	}
+}
+
+
+/* handle Button */
+.handleBtn {
+	position: fixed;
+	width: 100%;
+	height: 70px;
+	border-radius: 35px 35px 0px 0px;
+	bottom: 0px;
+	left: 0px;
+}
+.handleCancelBtn {
+	border-radius: 35px 35px 0px 0px;
+	position: relative;
+	width: 100%;
+	height: 70px;
+	/* top: -35px; */
+}
+.handleCancelBtn:hover {
+	background-color: #17A2B8;
+	outline: none;
+	border-color: #17A2B8;
+}
+.cancelBtn {
+	width: 100%;
+	height: 100%;
+	background-color: tomato;
+}
+/* Result */
+.result-area {
+	position: fixed;
+	width: 100%;
+	height: 800px;
+	left: 0px;
+	/* overflow-x: hidden; */
+	bottom: 0px;
+	background-color: #17A2B8;
+	border-radius: 35px 35px 0px 0px;
+}
+.result-area .result-scroll {
+	height: 700px;
+	overflow-y: scroll;
+}
+.result-area .result-scroll .row {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.result-area .result-scroll img {
+	width: 150px;
+	height: 150px;
+}
+.result-area .submitBtn {
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+	height: 70px;
+	border: none;
+	color: white;
+	font-weight: 700;
+	background-color: tomato;
+}
+
+/* #interactive */
+#interactive.viewport {
+  width: 100%;
+  height: 300px;
+}
+#interactive.viewport canvas,
+video {
+  width: 100%;
+  height: 300px;
+  position: absolute;
+  top: 160px;
+  left: 0;
+}
+#interactive.viewport canvas.drawingBuffer,
+video.drawingBuffer {
+  width: 100%;
+  height: 300px;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+	.stateBtn {
+		margin-top: 10px;
+	}
+	.result-area {
+		height: 500px;
+	}
+	.result-scroll {
+		height: 400px;
+	}
+	#interactive.viewport canvas,
+	video {
+	  top: 145px;
+	}
+}

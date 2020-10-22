@@ -1,0 +1,13 @@
+.dropdown-menu {
+	left: -100px;
+	right: 0px;
+}
+.dropdown-menu .dropdown-item {
+	display: inline-block;
+}
+
+@media (max-width: 768px) {
+	.dropdown-menu .not {
+		display: none;
+	}
+}

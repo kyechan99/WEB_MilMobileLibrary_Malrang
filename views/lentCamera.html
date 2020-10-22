@@ -1,0 +1,61 @@
+{% extends "./base.html" %}
+
+{% block css %}
+<!-- <link rel="stylesheet" href="/static/css/auth.css" /> -->
+<link rel="stylesheet" href="/static/css/scan.css" />
+{% endblock %}
+
+{% block header %}
+{% include "./components/header.html" %}
+{% endblock %}
+
+{% block root %}
+<!-- <div class="polka pattern"></div> -->
+<div class="container">
+	<h1 class="title text-center">대여하기</h1>
+	
+    <!-- Div to show the scanner -->
+	<div class="scan d-flex justify-content-center flex-column">
+		<button class="btn btn-primary stateBtn" id="btn" >Start/Stop</button>
+		
+		<label>
+			<h3 class="text-center subtitle">Camera</h3>
+			<select  class="form-control" name="input-stream_constraints" id="deviceSelection">
+			</select>
+		</label>
+		
+		<label><input type="checkbox" class="form-check-input" id="torch" value="Torch" />라이트</label>
+	</div>
+
+    <div id="scanner-container"></div>
+	<button class="btn btn-info handleBtn" onClick="changeResultOpen()"><span id="howManyResult"  style="font-size:20px;"></span></button>
+	
+	<div class="result-area" id="result-area" style="display:none;">
+		<button class="btn btn-info handleCancelBtn" onClick="changeResultOpen()"><span id="howManyResultCancel"  style="font-size:20px;"></span></button>
+		
+		<!-- TODO : form action 에 책 대여 페이지로 이동	 -->
+		<div class="container result-scroll">
+			<form id="books" method="POST" action="/rent" onsubmit="return checkSubmit(this)">
+				<div id="thumb"></div>
+				<!-- <ul></ul> -->
+				
+				<input class="submitBtn" type="submit">
+			</form>
+		</div>
+	</div>
+	<!--  결과물   -->
+	<!-- <form id="books" method="POST" action="/admin/add" onsubmit="return checkSubmit(this)">
+		<ul id="thumb"></ul>
+
+		<input type="submit">
+	</form> -->
+	
+    <div id="log"></div>	
+	
+</div>
+
+
+<!-- Include the image-diff library -->
+<script src="/static/quagga.min.js"></script>
+<script src="/static/js/scan.js"></script>
+{% endblock %}

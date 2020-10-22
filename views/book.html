@@ -1,0 +1,25 @@
+{% extends "./base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/book.css" />
+{% endblock %}
+
+{% block header %}
+{% include "./components/header.html" %}
+{% endblock %}
+
+{% block root %}
+<!-- <div class="polka pattern"></div> -->
+<div class="container">
+  <h1 class="title text-center">{{ info.marc_title }}</h1>
+  <img src="{{ info.marc_img }}" width="200px">
+  {% for e in lib %}
+  <p>{{ e.lib_name }}
+  {% if e.isBooked %} 대여 중 {% else %} <a href="">대여하기</a> {% endif %}
+  </p>
+  {% endfor %}
+  {% for key, value in lib2 %}
+  <p>{{ key }} : {{ value }}</p>
+  {% endfor %}
+</div>
+{% endblock %}

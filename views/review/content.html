@@ -1,0 +1,36 @@
+{% extends "../base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/review.css" />
+{% endblock %}
+
+{% block header %}
+{% include "../components/header.html" %}
+{% endblock %}
+
+{% block root %}
+<div class="review container">
+	<div class="card">
+		<div class="card-header">[ {{result.bookTitle}} ] {{result.reviewTitle}}</div>
+		<div class="card-body">
+			<div class="review-content">
+				<p class="review-author">
+					{{ rank[result.rank] }} {{ result.name }}
+				</p>
+				<p class="card-text">
+					{{result.content}}
+				</p>
+				{% if result.serial_num === user.serial_num %}
+				<form action="/review/del/{{result.idx}}" method="post">
+				<button type="submit" class="btn btn-danger review-delte float-right" onclick="">삭제</button>
+				</form>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+	<a class="btn btn-primary float-center before-btn" href="/review">이전으로 돌아가기</a>
+</div>
+{% endblock %}
+
+{% block react %}
+{% endblock %}

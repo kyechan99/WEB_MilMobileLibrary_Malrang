@@ -1,0 +1,37 @@
+{% extends "../base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/user.css" />
+{% endblock %}
+
+{% block header %}
+{% include "../components/header.html" %}
+{% endblock %}
+
+{% block root %}
+<div id="user container">
+	<h1 class="text-center title">도서 관리 바코드</h1>
+	<br/><br/>
+	<div class="container">
+        <a class="btn btn-info" href="javascript:window.print();">인쇄</a>
+        <br/><br/>
+		{% for d in data %}
+            <svg class="barcode" jsbarcode-value="{{ d.reg_key }}" jsbarcode-height="90"  style="margin-right: 10px;"></svg>
+            <p>{{ d.title }}</p>
+            <br>
+        {% endfor %}
+	</div>
+</div>
+
+<script>
+
+</script>
+{% endblock %}
+
+{% block react %}
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js" crossorigin="anonymous"></script>
+<script>
+JsBarcode(".barcode").init();
+
+</script>
+{% endblock %}

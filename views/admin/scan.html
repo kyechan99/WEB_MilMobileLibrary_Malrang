@@ -1,0 +1,64 @@
+{% extends "../base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/admin.css" />
+<link rel="stylesheet" href="/static/css/scan.css" />
+{% endblock %}
+
+{% block header %}
+{% include "../components/header.html" %}
+{% endblock %}
+
+{% block root %}
+<div class="dev container">
+    <h1 class="title text-center">{{ lib.name }} : 도서 등록</h1>
+    
+    <form id="mannual" onsubmit="return man(this)" style="margin-top: 45px;">
+        <label for="mannual_isbn">
+			<input type="number" id="mannual_isbn" name="mannual_isbn" class="form-control mr-sm-2 input-control" placeholder="ISBN을 입력해주세요.">
+		</label>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
+    </form>
+    
+    
+    <!-- Div to show the scanner -->
+	<div class="scan d-flex justify-content-center flex-column">
+		<button class="btn btn-primary stateBtn" id="btn" >카메라 켜기</button>
+		
+		<label>
+			<h3 class="text-center subtitle">Camera</h3>
+			<select  class="form-control" name="input-stream_constraints" id="deviceSelection">
+			</select>
+		</label>
+		
+		<label><input type="checkbox" class="form-check-input" id="torch" value="Torch" />라이트</label>
+	</div>
+
+    <div id="scanner-container"></div>
+	<button class="btn btn-info handleBtn" onClick="changeResultOpen()"><span id="howManyResult"  style="font-size:20px;"></span></button>
+	
+	<div class="result-area" id="result-area" style="display:none;">
+		<button class="btn btn-info handleCancelBtn" onClick="changeResultOpen()"><span id="howManyResultCancel"  style="font-size:20px;"></span></button>
+		
+		<div class="container result-scroll">
+			<form id="books" method="POST" action="/admin/add" onsubmit="return checkSubmit(this)">
+				<div id="thumb"></div>
+				<!-- <ul></ul> -->
+				
+				<input class="submitBtn" type="submit">
+			</form>
+		</div>
+	</div>
+	<!--  결과물   -->
+	<!-- <form id="books" method="POST" action="/admin/add" onsubmit="return checkSubmit(this)">
+		<ul id="thumb"></ul>
+
+		<input type="submit">
+	</form> -->
+		
+</div>
+
+<!-- Include the image-diff library -->
+<script src="/static/quagga.min.js"></script>
+<script src="/static/js/scan.js?v6"></script>
+{% endblock %}

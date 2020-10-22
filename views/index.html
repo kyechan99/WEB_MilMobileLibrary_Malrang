@@ -1,0 +1,97 @@
+{% extends "./base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/index.css" />
+{% endblock %}
+
+{% block header %}
+{% include "./components/header.html" %}
+{% endblock %}
+
+{% block root %}
+<div class="main container">
+	<h1 class="title text-center">국방 모바일 도서관</h1>
+	<p class="text-center">국방 모바일 도서관은 쉽고 빠르고 편리합니다.</p>
+	<!-- <form class="form-inline my-2 my-lg-0" action="/search">
+		<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+		<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+	</form> -->
+	<form action="/search"  class="search-form form-inline my-2 my-lg-0">
+		<select name="type" class="form-control">
+			<option value="default">일반</option>
+            <option value="title">제목</option>
+			<option value="author">저자</option>
+			<option value="unit">부대</option>
+		</select>
+		<input type="text" class="form-control mr-sm-2 input-control" placeholder="검색어를 입력해 주세요." id="query" name="query" autocomplete="off">
+        <!-- <input type="image" src="/static/camera.png" width="24px"> -->
+		<button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
+	</form>
+    
+	<div class="reco-box" style="margin-top: 35px; margin-bottom: 35px; opacity:0.6;">
+		<span style="font-size: 12px; opacity:0.5;">|</span>
+		<h4 style="font-weight:600; margin-top: 15px;">이달의 도서</h4>
+		<p class="recommendBook">1. <a href="/search?type=default&query=기억"><span>기억 : 베르나르 베르베르 장편소설</span></a></p>
+		<p class="recommendBook">2. <a href="/search?type=default&query=총균쇠"><span>총, 균, 쇠 : 무기·병균·금속은 인류의 운명을 어떻게 바꿨는가</span></a></p>
+		<p class="recommendBook">3. <a href="/search?type=default&query=지적"><span>지적 대화를 위한 넓고 얕은 지식</span></a></p>
+		<p class="recommendBook" style="margin-bottom: 15px;">4. <a href="/search?type=default&query=무소유"><span>무소유(승려 법정의 저서)</span></a></p>
+		<span style="font-size: 12px; opacity:0.5;">|</span>
+	</div>
+
+	<div class="row">
+		<div class="col-6">
+			<a class="btn btn-primary rent" href="/rent">
+				<svg class="bi bi-book" width="60px" height="60px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+				  <path fill-rule="evenodd" d="M3.214 1.072C4.813.752 6.916.71 8.354 2.146A.5.5 0 0 1 8.5 2.5v11a.5.5 0 0 1-.854.354c-.843-.844-2.115-1.059-3.47-.92-1.344.14-2.66.617-3.452 1.013A.5.5 0 0 1 0 13.5v-11a.5.5 0 0 1 .276-.447L.5 2.5l-.224-.447.002-.001.004-.002.013-.006a5.017 5.017 0 0 1 .22-.103 12.958 12.958 0 0 1 2.7-.869zM1 2.82v9.908c.846-.343 1.944-.672 3.074-.788 1.143-.118 2.387-.023 3.426.56V2.718c-1.063-.929-2.631-.956-4.09-.664A11.958 11.958 0 0 0 1 2.82z"/>
+				  <path fill-rule="evenodd" d="M12.786 1.072C11.188.752 9.084.71 7.646 2.146A.5.5 0 0 0 7.5 2.5v11a.5.5 0 0 0 .854.354c.843-.844 2.115-1.059 3.47-.92 1.344.14 2.66.617 3.452 1.013A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.276-.447L15.5 2.5l.224-.447-.002-.001-.004-.002-.013-.006-.047-.023a12.582 12.582 0 0 0-.799-.34 12.96 12.96 0 0 0-2.073-.609zM15 2.82v9.908c-.846-.343-1.944-.672-3.074-.788-1.143-.118-2.387-.023-3.426.56V2.718c1.063-.929 2.631-.956 4.09-.664A11.956 11.956 0 0 1 15 2.82z"/>
+				</svg>
+				<p class="btnInfo">대출</p>
+			</a>
+		</div>
+		<div class="col-6">
+			<a class="btn btn-primary hand" href="/handIn">
+				<svg class="bi bi-reply-all" width="60px" height="60px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+				  <path fill-rule="evenodd" d="M8.002 5.013a.144.144 0 0 0-.202.134V6.3a.5.5 0 0 1-.5.5c-.667 0-2.013.005-3.3.822-.984.624-1.99 1.76-2.595 3.876C2.425 10.515 3.59 9.982 4.61 9.7a8.741 8.741 0 0 1 1.921-.306 7.403 7.403 0 0 1 .798.008h.013l.005.001h.001L7.3 9.9l.05-.498a.5.5 0 0 1 .45.498v1.153c0 .108.11.176.202.134l3.984-2.933a.494.494 0 0 1 .042-.028.147.147 0 0 0 0-.252.494.494 0 0 1-.042-.028L8.002 5.013zM6.8 10.386a7.745 7.745 0 0 0-1.923.277c-1.326.368-2.896 1.201-3.94 3.08a.5.5 0 0 1-.933-.305c.464-3.71 1.886-5.662 3.46-6.66 1.245-.79 2.527-.942 3.336-.971v-.66a1.144 1.144 0 0 1 1.767-.96l3.994 2.94a1.147 1.147 0 0 1 0 1.946l-3.994 2.94a1.144 1.144 0 0 1-1.767-.96v-.667z"/>
+				  <path fill-rule="evenodd" d="M10.868 4.293a.5.5 0 0 1 .7-.106l3.993 2.94a1.147 1.147 0 0 1 0 1.946l-3.994 2.94a.5.5 0 0 1-.593-.805l4.012-2.954a.493.493 0 0 1 .042-.028.147.147 0 0 0 0-.252.496.496 0 0 1-.042-.028l-4.012-2.954a.5.5 0 0 1-.106-.699z"/>
+				</svg>
+				<p class="btnInfo">반납</p>
+			</a>
+		</div>
+	</div>
+	<div class="develop">
+		<a class="btn btn-primary" href="/review">
+			<svg width="60px" height="60px" viewBox="0 0 16 16" class="bi bi-bookshelf" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+			  <path fill-rule="evenodd" d="M2.5 0a.5.5 0 0 1 .5.5V2h10V.5a.5.5 0 0 1 1 0v15a.5.5 0 0 1-1 0V15H3v.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5zM3 14h10v-3H3v3zm0-4h10V7H3v3zm0-4h10V3H3v3z"/>
+			</svg>
+			<p class="btnInfo">리뷰</p>
+		</a>
+	</div>
+	
+	
+	
+	{% if user.isAdmin %}
+	<br/>
+	<hr/>
+	<div class="develop">
+		<a class="btn btn-primary" href="/admin">
+			<svg class="bi bi-upc-scan" width="60px" height="60px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+			  <path fill-rule="evenodd" d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1h-3zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5zM.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5z"/>
+			  <path d="M3 4.5a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-7zm3 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7z"/>
+			</svg>
+			<p class="btnInfo">관리자 페이지</p>
+		</a>
+	</div>
+	{% endif %}
+</div>
+{% endblock %}
+
+{% block react %}
+<script src="/static/js/typeahead.js" crossorigin="anonymous"></script>
+<script>
+	{% if i > 1 %}
+	alert('연체 알림: "{{ ttt }}" 등 {{ i }}권의 대여기간이 경과되었습니다.');
+	{% elif i > 0 %}
+	alert('연체 알림: {{ ttt }}의 대여기간이 경과되었습니다.');
+	{% endif %}
+</script>
+{% endblock %}

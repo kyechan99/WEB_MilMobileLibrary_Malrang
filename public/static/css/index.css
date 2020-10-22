@@ -1,0 +1,58 @@
+
+.main .btn.btn-primary {
+	width: 100%;
+	height: 100%;
+	font-size: 28px;
+}
+
+.main .row {
+	margin-top: 100px;
+	margin-bottom: 30px;
+}
+
+.main .btn.btn-primary {
+	padding: 60px;
+	border: none;
+	background-color: #99B898;
+	border-radius: 25px;
+}
+
+.main .btnInfo {
+	margin-top: 15px;
+	margin-bottom: 0px;
+}
+.main .develop {
+	margin-top: 30px;
+}
+.main .recommendBook {
+	margin-bottom: 0px;
+}
+
+.main .row .rent .btnInfo::before {content: "도서 "}
+.main .row .rent .btnInfo::after {content: "하기"}
+
+
+.main .row .hand .btnInfo::before {content: "도서 "}
+.main .row .hand .btnInfo::after {content: "하기"}
+
+@media (max-width: 768px) {
+    .main .row .rent .btnInfo::before {content: ""}
+    .main .row .rent .btnInfo::after {content: ""}
+    
+    .main .row .hand .btnInfo::before {content: ""}
+    .main .row .hand .btnInfo::after {content: ""}
+    
+	.main .row {
+		margin-top: 50px;
+		margin-bottom: 30px;
+	}
+	.main .col-md-6 {
+		margin-bottom: 30px;
+	}
+	.main .btn.btn-primary {
+		padding: 40px;
+	}
+	.main .develop {
+		margin-top: 55px;
+	}
+}

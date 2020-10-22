@@ -1,0 +1,40 @@
+{% extends "./base.html" %}
+
+{% block root %}
+<form action="/search"  class="search-form form-inline my-2 my-lg-0" style="" id="form">
+    <select name="type" class="form-control">
+        <option value="default">일반</option>
+        <option value="title">제목</option>
+        <option value="author">저자</option>
+        <option value="unit">부대</option>
+    </select>
+    <input type="text" class="typeahead form-control mr-sm-2 input-control" placeholder="여덟단어" id="query" name="query" autocomplete="off">
+    <!-- <input type="image" src="/static/camera.png" width="24px"> -->
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
+</form>
+{% endblock %}
+
+{% block react %}
+<script>
+$(document).ready(function() {
+    $('#form .typeahead').typeahead({
+        //autoSelect: false,
+        matcher: item => {
+            return true
+        },
+        //sorter: ,
+        source: function(query, result) {
+            $.ajax({
+                url: "/api/search",
+                method: "GET",
+                data: {q: query},
+                dataType: "json",
+                success: function(data) {
+                    result(data);
+                }
+            })
+        }
+    });
+});
+</script>
+{% endblock %}

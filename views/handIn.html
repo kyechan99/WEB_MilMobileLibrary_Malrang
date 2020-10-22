@@ -1,0 +1,84 @@
+{% extends "./base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/book.css" />
+{% endblock %}
+
+{% block header %}
+{% include "./components/header.html" %}
+{% endblock %}
+
+{% block root %}
+<!-- <div class="polka pattern"></div> -->
+<div class="container">
+	<h1 class="title text-center">반납하기</h1>
+	<p class="text-center"> 내가 대여한 목록입니다. </p>
+	<br/><br/><br/><br/><br/>
+	{% if results.length == 0 %}
+		<p>대여한 도서가 없습니다.</p>
+	{% endif %}
+	{% for r in results %}
+	{%  if r.isReturned==false %}
+	<form method="POST" action="/handIn">
+		<div class="row book-info">
+			<div class="col-md-3">
+				<!-- // 책 이미지 -->
+				<img id="" class="book-img" src="/cover/{{ r.marc_ea_isbn }}.jpg" onerror="this.src='https://ssl.pstatic.net/static/book/image/noimg3.gif';"/>
+			</div>
+			<div class="col-md-7">
+				<div class="d-flex flex-column">
+					<!-- // 책 정보 -->
+					<h3 class="text-left book-title" style=""><span id="...">{{ r.marc_title }}</span></h3>
+					<h4 class="text-left book-writer">
+						<span class="book-author">{{ r.marc_author }}</span> | <span class="book-publisher">{{ r.marc_publisher }}</span>
+					</h4>
+					<h4 class="text-left book-subtitle">{{ r.rec_key }}</h4>
+					<!-- <p class="book-author"></p> -->
+					<p class="text-left book-borrow-date" style="opacity:0.8;">대여 날짜 : {{ r.borrow_date }}</p>
+				</div>
+			</div>
+			<div class="col-md-2">
+				<input type="hidden" name="rec_key" value="{{ r.rec_key }}">
+				<!-- <button id="..." class="btn btn-danger btn-state" style="">반납</button> -->
+				<input type="submit" class="btn btn-danger btn-state" value="반납" />
+			</div>
+		</div>
+	</form>
+	{% endif %}
+	{% endfor %}
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<p>반납한 도서들</p>
+	<hr/>
+	{% for r in results %}
+	{%  if r.isReturned  %}
+		<div class="row book-info" style="opacity:0.5;">
+			<div class="col-md-3">
+				<!-- // 책 이미지 -->
+				<img id="" class="book-img" src="/cover/{{ r.marc_ea_isbn }}.jpg" onerror="this.src='https://ssl.pstatic.net/static/book/image/noimg3.gif';"/>
+			</div>
+			<div class="col-md-7">
+				<div class="d-flex flex-column">
+					<!-- // 책 정보 -->
+					<h3 class="text-left book-title" style=""><span id="...">{{ r.marc_title }}</span></h3>
+					<h4 class="text-left book-writer">
+						<span class="book-author">{{ r.marc_author }}</span> | <span class="book-publisher">{{ r.marc_publisher }}</span>
+					</h4>
+					<h4 class="text-left book-subtitle">{{ r.rec_key }}</h4>
+					<!-- <p class="book-author"></p> -->
+					<!-- <p class="text-left book-borrow-date">{{ r.return_date }}</p> -->
+					<p class="text-left book-borrow-date" style="opacity:0.8;">{{ r.borrow_date }} ~ {{ r.return_date }}</p>
+				</div>
+			</div>
+			<div class="col-md-2">
+				<button type="button" class="btn btn-danger btn-state" disabled>반납 완료</button>
+			</div>
+		</div>
+	{% endif %}
+	{% endfor %}
+	
+</div>
+{% endblock %}

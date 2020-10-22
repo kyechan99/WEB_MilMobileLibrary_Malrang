@@ -1,0 +1,38 @@
+{% extends "../base.html" %}
+
+{% block header %}
+{% include "../components/header.html" %}
+{% endblock %}
+
+{% block root %}
+<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+  <h1 id="hhh">도서 등록 중입니다.</h1>
+  <h2 id="ggg">잠시만 기다려 주십시오.<span class="i"></span></h2>
+</div>
+{% endblock %}
+
+{% block react %}
+<script>
+  var i = 1, x;
+  function worker() {
+    $.ajax({
+      url: '/api/adding',
+      success: function (data) {
+        if (data.ok) {
+          $("#ggg").html("");
+          $("#hhh").html("완료되었습니다. <a href='/admin'>관리자 페이지로</a>");
+          clearTimeout(x);
+        } else {
+          $(".i").text('.'.repeat(i));
+          if (i++ > 2) i = 0;
+        }
+      },
+      complete: function () {
+        x = setTimeout(worker, 1000);
+      }
+    })
+  }
+
+  worker();
+</script>
+{% endblock %}

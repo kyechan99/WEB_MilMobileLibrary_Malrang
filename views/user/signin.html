@@ -1,0 +1,32 @@
+{% extends "../base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/auth.css" />
+{% endblock %}
+
+{% block root %}
+<!-- As a link -->
+<nav class="navbar navbar-light bg-light navbar-fixed-top">
+  <a class="navbar-brand" href="/" style="font-weight:700;">국방 모바일 도서관</a>
+</nav>
+<!-- <div class="polka pattern"></div> -->
+<div class="container">
+	<div class="card login-card">
+		<h1 class="text-center">반갑습니다!</h1>
+		<br/>
+		<form method="POST">
+			<div class="form-group">
+				<!-- <label for="serial_num">군번 :</label> -->
+				<input type="text" class="form-control"  name="serial_num" id="serial_num" aria-describedby="emailHelp" placeholder="'-' 를 포함한 군번을 입력해 주세요.">
+			</div>
+			<div class="form-group" style="margin-bottom:40px;">
+				<!-- <label for="password">비밀번호</label> -->
+				<input type="password" class="form-control" id="password"  name="password" placeholder="비밀번호">
+			</div>
+			<p class="msg text-center">{{ msg }}</p>
+			<button type="submit" class="btn btn-primary" style="padding: 10px 40px 10px 40px; font-size: 20px; margin-top:20px;">로그인</button>
+		</form>
+		<a class="registerBtn" href="/user/signup">회원가입</a>
+	</div>
+</div>
+{% endblock %}

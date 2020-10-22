@@ -1,0 +1,51 @@
+
+.lent .btn.btn-primary {
+	width: 100%;
+	height: 100%;
+	font-size: 28px;
+}
+.lent .btn.btn-primary .bi {
+	margin-bottom: 20px;
+}
+.lent .btn.btn-primary p {
+	margin-bottom: 0px;
+}
+
+.lent .row {
+	margin-top: 100px;
+	margin-bottom: 30px;
+}
+.lent .col-lg-4 {
+	margin-bottom: 30px;
+}
+
+.lent .btn.btn-primary {
+	padding: 30px;
+	border: none;
+	background-color: #99B898;
+	border-radius: 25px;
+}
+
+.lent .btnInfo {
+	margin-top: 15px;
+	margin-bottom: 0px;
+}
+.lent .develop {
+	margin-top: 30px;
+}
+.lent .recommendBook {
+	margin-bottom: 0px;
+}
+
+@media (max-width: 768px) {
+	.lent .row {
+		margin-top: 50px;
+		margin-bottom: 30px;
+	}
+	.lent .btn.btn-primary {
+		padding: 40px;
+	}
+	.lent .develop {
+		margin-top: 55px;
+	}
+}

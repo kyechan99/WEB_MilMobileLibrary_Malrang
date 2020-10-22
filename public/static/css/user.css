@@ -1,0 +1,98 @@
+tbody tr:hover {
+	background-color: #ebebeb;
+	cursor: pointer;
+}
+
+.show-me-box {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	left: 0px;
+	top: 0px;
+	display: none;
+	z-index: 100;
+}
+.show-me-box-bg {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	left: 0px;
+	top: 0px;
+	background-color: black;
+	opacity: 0.4;
+	z-index: 100;
+}
+.show-me-box .container .card {
+	padding: 50px;
+	margin-top: 20vh;
+	z-index: 101;
+}
+.show-me-box .container #user-lent-book {
+	margin-top: 50px;
+	margin-bottom: 50px;
+	
+	height: 25vh;
+	overflow-y: scroll;
+}
+.show-res {
+	display: none;
+}
+@media (max-width: 768px) {
+	.res-thead,
+	.res-th,
+	.res-hide {	
+		display: none;
+	}
+	td {
+		padding: 0px !important;
+		border: 0 none !important;
+	}
+	td,
+	.show-res {
+		display: block;
+	}
+	.res-tr {
+		padding-top: 20px;
+		padding-bottom: 20px;
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: row;
+		align-content: stretch;
+		border-top: 1px solid;
+		border-bottom: 1px solid;
+		text-align: left;
+	}
+	.res-serial {
+		margin-top: 0px;
+		padding-bottom: 0px;
+		flex-grow: 1;
+		width: 100%;
+		border-width: initial;
+		border-style: none;
+		border-color: initial;
+		border-image: initial;
+	}
+	.td-another {
+		padding-bottom: 0px;
+		width: 100%;
+		border-width: initial;
+		border-style: none;
+		border-color: initial;
+		border-image: initial;
+	}
+	.res-important {
+		font-size: 22px;
+		font-weight: 600;
+		margin-bottom: 5px;
+	}
+	.res-unimportant {
+		opacity: 0.9;
+		font-size: 14px;
+	}
+	
+	
+	.show-me-box .container .card {
+		padding: 10px;	
+		
+	}
+}

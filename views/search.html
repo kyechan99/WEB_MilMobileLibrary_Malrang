@@ -1,0 +1,140 @@
+{% extends "./base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/book.css">
+{% endblock %}
+
+{% block header %}
+{% include "./components/header.html" %}
+{% endblock %}
+
+{% block root %}
+<div class="search container">
+  <h1 class="title text-center" style="margin-bottom: 30px;">검색결과</h1>
+  <form action="/search" class="search-form form-inline my-2 my-lg-0">
+    <select name="type" class="form-control" value="{{ type }}">
+      <option value="default">일반</option>
+      <option value="title">제목</option>
+      <option value="author">저자</option>
+      <option value="unit">부대</option>
+    </select>
+    <input type="text" class="form-control mr-sm-2 input-control" placeholder="{{ query }}" id="query" name="query"
+      autocomplete="off" value="{{ query }}">
+    <!-- <input type="image" src="/static/camera.png" width="24px"> -->
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
+  </form>
+  <h4 style="text-align:left;">
+    총 {{ test.length }}건 {{ "이상" if test.length == 300 }}
+  </h4>
+  {% if query == '' %}
+  <p style="margin-top: 10em;">검색어를 입력해주세요.</p>
+  {% elseif results.length > 0 %}
+  <div id="books">
+    {% for r in results %}
+    <form method="POST" action="/rent">
+      <div class="row book-info">
+        <div class="col-md-3">
+          <!-- // 책 이미지 -->
+          <img id="" class="book-img" src="{{ r.marc_img }}" onerror="this.src='/static/nocover.gif';">
+        </div>
+        <div class="col-md-7">
+          <div class="d-flex flex-column">
+            <!-- // 책 정보 -->
+            <h3 class="text-left book-title"><span><a href="/book/{{ r.marc_ea_isbn }}">{{ r.marc_title }}</a></span>
+              {% if r.marc_subtitle %}({{ r.marc_subtitle }}){% endif %}
+            </h3>
+            <h4 class="text-left book-writer">
+              <span class="book-author">{{ r.marc_author }}</span> | <span
+                class="book-publisher">{{ r.marc_publisher }}</span> | {{ r.marc_publish_year }}
+            </h4>
+            <h4 class="text-left book-subtitle">
+              <span>{{ r.lib_name }}</span> | <span>{{ r.marc_ea_isbn }}</span>
+            </h4>
+            <p class="book-author"></p>
+          </div>
+        </div>
+        <input type="hidden" name="rec_key" value="{{ r.rec_key }}">
+        <input type="hidden" name="reg_key" value="{{ r.reg_key }}">
+        <input type="hidden" name="lib_code" value="{{ r.lib_code }}">
+        <input type="hidden" name="marc_ea_isbn" value="{{ r.marc_ea_isbn }}">
+
+        <div class="col-md-2" style="display: flex; align-items: center; justify-content: center;">
+          {% if r.isBooked %}
+            {% if r.isBooked > 5 %}
+            대여 중
+            {% else %}
+            <a class="btn btn-danger" href="/handIn">반납</a>
+            {% endif %}
+          {% endif %}
+          {% if r.k %}
+          <input type="submit" class="btn btn-primary btn-state" value="대여" />
+          {% endif %}
+        </div>
+      </div>
+    </form>
+    {% endfor %}
+  </div>
+  <div id="pagination"></div>
+  {% else %}
+  <p style="margin-top: 10em;">연관된 검색 결과가 없습니다.</p>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block react %}
+<script src="/static/js/typeahead.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.min.js" crossorigin="anonymous"></script>
+<script>var data = {{ test | dump | safe }}</script>
+<script>
+  var def_page = 1,
+    _change = false,
+    total_pages = Math.ceil({{ test.length }} / 10),
+    _byHash = false;
+
+  function getPage() {
+    var params = new URLSearchParams(location.hash.substr(1));
+
+    var page = params.get("page") * 1;
+    if (isNaN(page) || page <= 0 || page > total_pages) page = 1;
+
+    return page;
+  }
+
+  if (location.hash) {
+    def_page = getPage();
+  }
+
+  // http://josecebe.github.io/twbs-pagination/#demo
+  var isMobile = window.matchMedia("(max-width: 768px)").matches;
+  $("#pagination").twbsPagination({
+    startPage: def_page,
+    totalPages: total_pages,
+    visiblePages: isMobile ? 5 : 10,
+    prev: "&laquo;",
+    next: "&raquo;",
+    first: "처음",
+    last: "끝",
+    onPageClick: function (event, page) {
+      if (!_change) {
+        _change = true;
+        if (page === 1) return;
+      }
+
+      window.location.hash = "page=" + page;
+
+      var books = data.slice((page - 1) * 10, page * 10);
+      $("#books").html("");
+      for (var r of books) {
+        var ooo = "";
+        r.isBooked && (ooo = r.isBooked > 5 ? "대여 중" : '<a class="btn btn-danger" href="/handIn">반납</a>');
+        $("#books").append(`<form method="POST" action="/rent"><div class="row book-info"><div class="col-md-3"><img class="book-img" src="${r.marc_img}" onerror="this.src='/static/nocover.gif';"></div><div class="col-md-7"><div class="d-flex flex-column"><h3 class="text-left book-title"><span>${r.marc_title}</span>${r.marc_subtitle ? ' (' + r.marc_subtitle + ')' : ''}</h3><h4 class="text-left book-writer"><span class="book-author">${r.marc_author}</span> | <span class="book-publisher">${r.marc_publisher}</span> | ${r.marc_publish_year}</h4><h4 class="text-left book-subtitle"><span>${r.lib_name}</span> | <span>${r.marc_ea_isbn}</span></h4><p class="book-author"></p></div></div><input type="hidden" name="rec_key" value="${r.rec_key}"><input type="hidden" name="reg_key" value="${r.reg_key}"><input type="hidden" name="lib_code" value="${r.lib_code}"><input type="hidden" name="serial_num" value="${r.marc_ea_isbn}"><div class="col-md-2" style="display: flex; align-items: center; justify-content: center;">${ooo}${r.k ? '<input type="submit" class="btn btn-primary btn-state" value="대여">' : ''}</div></div></form>`)
+      }
+    }
+  });
+
+  window.onhashchange = function () {
+    console.log("Hash changed by onHashChange");
+    $("#pagination").twbsPagination("show", getPage());
+  }
+</script>
+{% endblock %}

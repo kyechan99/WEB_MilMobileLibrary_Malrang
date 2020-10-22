@@ -1,0 +1,115 @@
+{% extends "../base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/user.css" />
+{% endblock %}
+
+{% block header %}
+{% include "../components/header.html" %}
+{% endblock %}
+
+{% block root %}
+<div class="show-me-box" id="show-me-box">
+	<div class="show-me-box-bg"></div>
+	<div class="container">
+		<div class="card">
+			<h1 id="user-name"></h1>
+			<hr/>
+			<div id="user-lent-book"></div>
+			<!-- <p id="user-lent-book">빌려간 책 1</p>
+			<p>빌려간 책 2</p> -->
+		<button class="btn btn-primary" onclick="callMe(0, '')">닫기</button>
+		</div>
+	</div>
+</div>
+<div id="user container">
+	<h1 class="text-center title">{{ lib.name }} 회원</h1>
+	<br/><br/><br/><br/><br/>
+	<div class="container">
+		<table class="table">
+			<thead class="res-thead">
+				<tr>
+				  <th scope="col">#</th>
+				  <th scope="col">군번</th>
+				  <th scope="col">이름</th>
+				  <th scope="col">소속</th>
+				  <th scope="col">계급</th>
+				  <th scope="col">부대</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for r in results %}
+				<tr onclick="callMe('{{ r.serial_num }}', '{{ r.name }}')" class="res-tr">
+				  <th scope="row" class="res-th">{{ loop.index }}</th>
+				  <td class="res-serial res-unimportant">{{ r.serial_num }}</td>
+				  <td class="td-another res-important"><span class="show-res" style="display:inline;">{{ rank[r.rank] }} </span>{{ r.name }}</td>
+				  <td class="td-another">{{ belongData[r.belong] }}</td>
+				  <td class="td-another res-hide">{{ rank[r.rank] }}</td>
+				  <td class="td-another">{{ r.unit }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<script>
+var bgBox = false;
+function callMe(userSerialNum, userName) {
+	bgBox = !bgBox;
+	if (bgBox) {
+		let urlTemp = 'userInfo/' + userSerialNum;
+		$.ajax({
+				url: urlTemp,
+				dataType: 'json',
+				type: 'GET',
+				data: {},
+				success: function(result) {
+					if (result) {
+						console.log(result);
+						document.getElementById('user-name').innerHTML = userName;
+						if (result.length > 0) {
+							let tempHtml = '';
+							for (const r in result) {
+								tempHtml += `<p>` + result[r].marc_title  +` (` + result[r].marc_author + `)` + `</p>`;
+							}
+							document.getElementById('user-lent-book').innerHTML = tempHtml;
+						}
+						else {
+							document.getElementById('user-lent-book').innerHTML = '<span style="opacity:0.5;">대여한 도서가 없습니다.</span>';
+						}
+						document.getElementById('show-me-box').style.display = "block";
+					}
+				}
+		});
+	}
+	else
+		document.getElementById('show-me-box').style.display = "none";
+}
+		
+ // $(document).ready(function(){ 
+	// $('#getMethod').click(function() { 
+	// 	var get = 'GET METHOD CALL'; 
+	// });
+
+	// $('#postMethod').click(function() {
+	//    var post = 'POST METHOD CALL';
+	// 	$.ajax({
+	// 		url: '/api/post',
+	// 		  dataType: 'json',
+	// 		  type: 'POST',
+	// 		  data: {data:post},
+	// 		  success: function(result) {
+	// 			  if (result) {
+	// 				 $('#post_output').html(result.result);
+	// 			  }
+	// 		  }
+	// 	  });
+	// });
+ // });	
+
+</script>
+{% endblock %}
+
+{% block react %}
+{% endblock %}

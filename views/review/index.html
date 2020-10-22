@@ -1,0 +1,41 @@
+{% extends "../base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/review.css" />
+{% endblock %}
+
+{% block header %}
+{% include "../components/header.html" %}
+{% endblock %}
+
+{% block root %}
+<div class="review container">
+	<h1 class="title text-center">리뷰</h1>
+	<p class="subtitle text-center">읽은 책에 대해 자유롭게 리뷰해주세요!</p>
+	
+	<a class="btn btn-primary float-right write-btn" href="review/write"><svg width="16px" height="16px" viewBox="0 0 16 16" class="bi bi-pencil" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M11.293 1.293a1 1 0 0 1 1.414 0l2 2a1 1 0 0 1 0 1.414l-9 9a1 1 0 0 1-.39.242l-3 1a1 1 0 0 1-1.266-1.265l1-3a1 1 0 0 1 .242-.391l9-9zM12 2l2 2-9 9-3 1 1-3 9-9z"/>
+  <path fill-rule="evenodd" d="M12.146 6.354l-2.5-2.5.708-.708 2.5 2.5-.707.708zM3 10v.5a.5.5 0 0 0 .5.5H4v.5a.5.5 0 0 0 .5.5H5v.5a.5.5 0 0 0 .5.5H6v-1.5a.5.5 0 0 0-.5-.5H5v-.5a.5.5 0 0 0-.5-.5H3z"/>
+</svg> 리뷰 작성하기</a>
+	<div class="review-list">
+		{% for r in results | reverse %}
+		<div class="row">
+			<div class="col-md-1">
+				<p class="text-left review-idx">{{ r.idx - 6 }}</p>
+			</div>
+			<div class="col-md-8">
+				<a href="review/content/{{ r.idx }}" class="review-title">
+					<span class="review-book" style="font-weight: bold;">[{{ r.bookTitle }}]</span> {{ r.reviewTitle }}
+				</a>
+			</div>
+			<div class="col-md-3">
+				<p class="text-right review-author">{{ rank[r.rank] }} {{ r.name }}</p>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}
+
+{% block react %}
+{% endblock %}

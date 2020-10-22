@@ -1,0 +1,58 @@
+{% extends "../base.html" %}
+
+{% block header %}
+{% include "../components/header.html" %}
+{% endblock %}
+
+{% block root %}
+
+
+<div class="container" style="margin-top:10vh;">
+	<form id="mod" method="POST" action="/admin/mod">
+
+
+	<label>rec_key: <input class="form-control"type="text" name="rec_key" value="{{ marc.rec_key }}" readonly></label>
+	<label>reg_key: <input class="form-control"type="text" name="reg_key" value="{{ marc.reg_key }}" readonly></label>
+	<label>제목: <input class="form-control"type="text" name="marc_title" value="{{ marc.marc_title }}"></label>
+	<label>부제목: <input class="form-control"type="text" name="marc_subtitle" value="{{ marc.marc_subtitle }}"></label>
+	<label>저자: <input class="form-control"type="text" name="marc_author" value="{{ marc.marc_author }}"></label>
+	<label>출판사: <input class="form-control"type="text" name="marc_publisher" value="{{ marc.marc_publisher }}"></label>
+	<label>출판년도: <input class="form-control"type="text" name="marc_publish_year" value="{{ marc.marc_publish_year }}"></label>
+	<label>ISBN: <input class="form-control"type="text" name="marc_ea_isbn" value="{{ marc.marc_ea_isbn }}"></label>
+	<label>한국십진분류법: <input class="form-control"type="text" name="kdc_class_no" value="{{ marc.kdc_class_no }}"></label>
+	<label>듀이십진분류법: <input class="form-control"type="text" name="ddc_class_no" value="{{ marc.ddc_class_no }}"></label>
+	<br/>
+	<label>종류: <select name="marc_type" class="form-control" style="display:inline;" value="{{ marc.marc_type }}">
+		<option disabled>선택해주세요</option>
+		<option value="도서">도서</option>
+		<option value="오디오북">오디오북</option>
+
+		<option value="영상자료">영상자료</option>
+		<option value="음악자료">음악자료</option>
+
+
+		<option value="장애인대체자료">장애인대체자료</option>
+		<option value="점자자료">점자자료</option>
+
+		<option value="잡지/학술지">잡지/학술지</option>
+		<option value="신문">신문</option>
+		<option value="기사">기사</option>
+
+		<option value="컴퓨터파일">컴퓨터파일</option>
+		<option value="외부연계자료">외부연계자료</option>
+
+		<option value="학위논문">학위논문</option>
+		<option value="고문헌">고문헌</option>
+
+		<option value="마이크로자료">마이크로자료</option>
+		<option value="웹사이트 수집">웹사이트 수집</option>
+		<option value="지도자료">지도자료</option>
+		<option value="기타">기타</option>
+	</select></label>
+	<br/><br/><br/><br/><br/>
+	<input class="form-control"type="submit" value="변경">
+	</form>
+	
+</div>
+
+{% endblock %}

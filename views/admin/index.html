@@ -1,0 +1,144 @@
+{% extends "../base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/admin.css" />
+{% endblock %}
+
+{% block header %}
+{% include "../components/header.html" %}
+{% endblock %}
+
+{% block root %}
+<div class="admin container">
+	<h1 class="title text-center">{{ lib.name }} 관리</h1>
+	<div class="row">
+		<div class="col-md-6">
+			<a class="btn btn-primary" href="/admin/scan">
+				<svg class="bi bi-file-plus" width="50px" height="50px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+				  <path d="M9 1H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8h-1v5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h5V1z"/>
+				  <path fill-rule="evenodd" d="M13.5 1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V1.5a.5.5 0 0 1 .5-.5z"/>
+				  <path fill-rule="evenodd" d="M13 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z"/>
+				</svg>
+				<p class="btnInfo">도서 등록</p>
+			</a>
+		</div>
+		<div class="col-md-6">
+			<a class="btn btn-primary" href="/admin/user">
+				<svg class="bi bi-people" width="50px" height="50px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+				  <path fill-rule="evenodd" d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.995-.944v-.002.002zM7.022 13h7.956a.274.274 0 0 0 .014-.002l.008-.002c-.002-.264-.167-1.03-.76-1.72C13.688 10.629 12.718 10 11 10c-1.717 0-2.687.63-3.24 1.276-.593.69-.759 1.457-.76 1.72a1.05 1.05 0 0 0 .022.004zm7.973.056v-.002.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10c-1.668.02-2.615.64-3.16 1.276C1.163 11.97 1 12.739 1 13h3c0-1.045.323-2.086.92-3zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
+				</svg>
+				<p class="btnInfo">회원 관리</p>
+			</a>
+		</div>
+	</div>
+
+<h2 style="margin-top:130px; font-weight:600; font-size:24px;">도서관리</h2>
+<form id="book_table" method="POST" action="/admin/del">
+<table class="tg table table-sm table-hover" style="text-align:left;">
+<thead class="table-head">
+  <tr>
+    <th></th>
+    <th scope="col">등록번호</th>
+    <!-- <th>타입</th> -->
+    <th scope="col">제목</th>
+    <th scope="col">저자</th>
+    <th scope="col">출판사</th>
+    <!-- <th>출판년도</th> -->
+    <th scope="col">ISBN</th>
+    <!-- <th>한국십진분류</th>
+    <th>듀이십진분류</th>
+    <th>페이지</th>
+    <th>사이즈</th>
+    <th>크기</th> -->
+    <!-- <th>가격</th> -->
+    <!-- <th>상태</th> -->
+    <th scope="col">대출상태</th>
+  </tr>
+</thead>
+<tbody>
+{% for b in rows %}
+  <tr class="table-tr">
+    <td scope="row" class="checkbox"><input type="checkbox" name="book[{{ b.rec_key }}]" onchange="handleChange('{{ b.rec_key }}')"></td>
+    <td class="libNum">{{ b.reg_key }}</td>
+    <!-- <td>{{ b.marc_type }}</td> -->
+    <td scope="row" class="title">{{ b.marc_title }} {% if b.marc_subtitle %}({{ b.marc_subtitle }}){% endif %}</td>
+    <td scope="row" class="author">{{ b.marc_author }}</td>
+    <td class="publisher"><span class="responsiveDesc">출판사 : </span>{{ b.marc_publisher }}</td>
+    <!-- <td>{{ b.marc_publish_year }}</td> -->
+    <td class="isbn"><span class="responsiveDesc">ISBN : </span>{{ b.marc_ea_isbn }}</td>
+    <!-- <td>{{ b.kdc_class_no }}</td>
+    <td>{{ b.ddc_class_no }}</td>
+    <td>{{ b.marc_page }}</td>
+    <td>{{ b.marc_size }}</td> -->
+    <!-- <td>{{ b.marc_price }}</td> -->
+    <!-- <td>{{ b.status }}</td> -->
+    <td class="isBooked {{ "off" if not b.isBooked }}"><span class="responsiveDesc">대출상태 : </span>{{ "대출 중" if b.isBooked }}</td>
+  </tr>
+{% else %}
+<tr>
+<td colspan="7" style="text-align: center;">등록된 도서가 없습니다.</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+    
+<button type="submit" id="removeBtn" class="btn btn-secondary" style="display:inline;width:auto;font-size:16px;" disabled>삭제</button>
+<button id="modifyBtn" class="btn btn-secondary" style="display:inline;width:auto;font-size:16px;" disabled>수정</button>
+<button id="printBtn" class="btn btn-secondary" style="display:inline;width:auto;font-size:16px;" disabled>바코드 인쇄</button>
+</form>
+</div>
+
+
+<script>
+var arr = [];
+function handleChange(idx) {
+	var isIn = false;
+	for (var i = 0; i < arr.length; i++) {
+		if (arr[i] === idx) {
+			isIn = true;
+			break;
+		}
+	}
+	if (isIn) {
+		arr.splice(arr.indexOf(idx), 1)
+		if (arr.length == 0) {
+			document.getElementById('removeBtn').className="btn btn-secondary";
+			document.getElementById('removeBtn').disabled = true;
+			document.getElementById('modifyBtn').className="btn btn-secondary";
+			document.getElementById('modifyBtn').disabled = true;
+            document.getElementById('printBtn').className="btn btn-secondary";
+			document.getElementById('printBtn').disabled = true;
+		}
+	} else {
+		arr.push(idx);
+		document.getElementById('removeBtn').className="btn btn-danger";
+		document.getElementById('removeBtn').disabled = false;
+		document.getElementById('modifyBtn').className="btn btn-warning";
+		document.getElementById('modifyBtn').disabled = false;
+        document.getElementById('printBtn').className="btn btn-info";
+		document.getElementById('printBtn').disabled = false;
+	}
+}
+</script>
+{% endblock %}
+
+{% block react %}
+<script>
+$("#modifyBtn").on('click', (e) => {
+    $("#book_table").attr("action", "/admin/modify");
+    if (arr.length > 1) {
+        alert("수정은 한 번에 한 개씩 가능합니다.")
+        return false;
+    }
+})
+    
+$("#removeBtn").on('click', (e) => {
+    $("#book_table").attr("action", "/admin/del");
+})
+
+$("#printBtn").on('click', (e) => {
+    $("#book_table").attr("action", "/admin/barcode");
+})
+</script>
+{% endblock %}
