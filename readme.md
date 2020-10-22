@@ -13,10 +13,12 @@
 ## 팀소개 및 프로잭트 설명 동영상
 ![1](https://user-images.githubusercontent.com/7152483/96900965-a2f8d600-14cd-11eb-946e-3108e7ae19b2.png)
 ![2](https://user-images.githubusercontent.com/7152483/96900989-aa1fe400-14cd-11eb-8d8f-25b1a901d94c.png)
-![3](https://user-images.githubusercontent.com/7152483/96900997-abe9a780-14cd-11eb-80ba-b5dc3dee8e13.jpg =300px)
+<img src="https://user-images.githubusercontent.com/7152483/96900997-abe9a780-14cd-11eb-80ba-b5dc3dee8e13.jpg" width="40%">
 
 
-[![Watch the video](https://img.youtube.com/vi/LjX3eVQdIyk/0.jpg)](https://www.youtube.com/watch?time_continue=117&v=LjX3eVQdIyk)
+<!---
+[![Watch the video](https://img.youtube.com/vi/LjX3eVQdIyk/0.jpg)](https://www.youtube.com/watch?time_continue=117&v=LjX3eVQdIyk))
+--->
 
 ## 기능 설계
  -  발사믹, 카카오 오븐 등 본인이 편한 목업 프레임워크를 이용하여 제작 후 링크 
